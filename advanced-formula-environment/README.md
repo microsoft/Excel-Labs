@@ -9,8 +9,6 @@ Create and edit formulas using a powerful formula editor. With the advanced form
 
 The advanced formula environment (AFE) works in Excel for Desktop, Web, and Mac, without installing any additional software. All you need to do to get started is get the add-in from the Office store: https://aka.ms/get-afe. Once installed, you can find AFE under the Formulas tab in Excel.
 
-The Microsoft Garage is an outlet for experimental projects for you to try. Learn more at https://garage.microsoft.com.
-
 #### Localisation
 
 AFE supports formula localisation, including argument separators such as `,` and `;`, and function names. By default, all formulas, including those in modules, will be translated to the workbook's locale. AFE provides a setting to fix all formulas to English.
