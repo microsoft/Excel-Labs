@@ -5,7 +5,7 @@ Excel Labs is an Office Add-in for Excel that allows us to release experimental 
 Excel Labs currently includes two features:
 
 1. Advanced formula environment: An interface designed for authoring, editing, and reusing formulas.
-1. LABS.GENERATIVEAI: A custom function that enables you to send prompts to a generative AI model and return the responses directly to the grid.
+1. `LABS.GENERATIVEAI`: A custom function that enables you to send prompts to a generative AI model and return the responses directly to the grid.
 
 The [Microsoft Garage](https://garage.microsoft.com) is an outlet for experimental projects for you to try.
 
@@ -35,7 +35,7 @@ You can send the model simple or complex prompts, such as requests to:
 
 `LABS.GENERATIVEAI` allows you to reference other cells in your workbook, and it can be called inside any Excel cell or named formula in the workbook.
 
-See [LABS.GENERATIVEAI function](/labs-generative-ai/README.md) for more information.
+See [LABS.GENERATIVEAI](/labs-generative-ai/README.md) for more information.
 
 ## Platform support
 

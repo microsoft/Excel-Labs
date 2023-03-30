@@ -1,4 +1,4 @@
-# `LABS.GENERATIVEAI` function, an Excel Labs feature
+# `LABS.GENERATIVEAI`, an Excel Labs feature
 
 `LABS.GENERATIVEAI` is custom function that allows you to send prompts from the Excel grid to a generative AI model and then return the results from the model directly back to your worksheet.
 
