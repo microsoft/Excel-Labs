@@ -14,7 +14,7 @@ Check out the following examples for prompt ideas and to learn how to structure 
     =LABS.GENERATIVEAI("Convert these airport codes into a comma-separated list of cities. The codes: LAX, HND, LHR, JNB.", 0)
     ```
 
-    Keep in mind that generative AI models can not guarantee the accuracy of data returned. They are very accurate at creative or language-based tasks, for example, classifying feedback as "positive" or "negative". However, generative AI models have lower accuracy for numerical tasks, such as fetching the population of a city. They have even lower accuracy for tasks requiring numerical comparisons or operations, such as ranking or sorting the results it returns.
+    Keep in mind that generative AI models can **not** guarantee the accuracy of data returned. They are very accurate at creative or language-based tasks, for example, classifying feedback as "positive" or "negative". However, generative AI models have lower accuracy for numerical tasks, such as fetching the population of a city. They have even lower accuracy for tasks requiring numerical comparisons or operations, such as ranking or sorting the results it returns.
 
 1. Use generative AI to reference and analyze other cells in this worksheet. Start by entering data in cells **A1**, **A2**, and **A3**, such as:
 

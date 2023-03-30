@@ -38,7 +38,7 @@ The following examples show a couple ways to use `LABS.GENERATIVEAI`.
     =LABS.GENERATIVEAI(“Write a poem about Excel.”)
     ```
 
-For more examples, see [LABS.GENERATIVEAI function samples](EXAMPLES.md).
+For more examples, see [LABS.GENERATIVEAI samples](EXAMPLES.md).
 
 ## Requirements
 
