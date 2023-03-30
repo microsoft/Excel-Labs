@@ -1,1 +1,0 @@
-# GPT function examples

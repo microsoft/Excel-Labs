@@ -1,32 +1,19 @@
 # Excel Labs, a Microsoft Garage project
 
-Excel Labs is an Office Add-in for Excel. It includes two features:
+Excel Labs is an Office Add-in for Excel that allows us to release experimental Excel features and gather customer feedback about these features. Some Excel Labs ideas may never be incorporated into Excel, but we think the experimentation and feedback this project offers are vital.
 
-1. GPT function: A custom function that enables you to call OpenAI from the Excel grid and return results from GPT directly to the grid.
+Excel Labs currently includes two features:
+
 1. Advanced formula environment: An interface designed for authoring, editing, and reusing formulas.
+1. LABS.GENERATIVEAI: A custom function that enables you to send prompts to a generative AI model and return the responses directly to the grid.
 
 The [Microsoft Garage](https://garage.microsoft.com) is an outlet for experimental projects for you to try.
-
-## GPT function
-
-This add-in creates a custom function called LABS.GPT that you can use to send prompts from the Excel grid to OpenAI’s GPT language model. LABS.GPT returns the results from GPT back to your worksheet.
-
-You can send GPT simple or complex prompts, such as requests to:
-
-- Analyze public information.
-- Import public data and define the format.
-- Answer factual or creative questions.
-- Produce a response based on a sample.
-
-LABS.GPT allows you to reference other cells in your workbook, and it can be called inside any Excel cell or named formula in the workbook.
-
-See [GPT function](/gpt-function/README.md) for more information.
 
 ## Advanced formula environment
 
 Advanced formula environment makes it easy to create, edit, and reuse formulas and named LAMBDA functions.
 
-The Excel Name Manager lets you name and reuse any formula, including functions defined with LAMBDA, but the interface makes it difficult to author these formulas. Common features that make programming easier are missing, such as immediate inline errors and syntax highlighting. The advanced formula environment fills this gap. It’s an interface for the Name Manager that is designed for formula authoring. Using the advanced formula environment, you can:
+While Excel Name Manager lets you name and reuse any formula, including functions defined with LAMBDA, the interface makes it difficult to author these formulas. Common features that make programming easier are missing, such as immediate inline errors and syntax highlighting. Advanced formula environment fills this gap. It’s an interface for the Name Manager that is designed for formula authoring. Using the advanced formula environment, you can:
 
 - Write formulas using an editor that supports inline errors, IntelliSense, comments, and more.
 - Indent formulas, making them easier to read.
@@ -34,6 +21,21 @@ The Excel Name Manager lets you name and reuse any formula, including functions 
 - Quickly reuse LAMBDA formulas by importing them from GitHub gists, or by copying them for other workbooks.
 
 See [Advanced formula environment](/advanced-formula-environment/README.md) for more information.
+
+## LABS.GENERATIVEAI function
+
+This add-in creates a custom function called LABS.GENERATIVEAI that you can use to send prompts from the Excel grid to a generative AI model. LABS.GENERATIVEAI returns the results from the model back to your worksheet.
+
+You can send the model simple or complex prompts, such as requests to:
+
+- Analyze public information.
+- Process data and define the format.
+- Answer factual or creative questions.
+- Produce a response based on a sample.
+
+LABS.GENERATIVEAI allows you to reference other cells in your workbook, and it can be called inside any Excel cell or named formula in the workbook.
+
+See [LABS.GENERATIVEAI function](/labs-generative-ai/README.md) for more information.
 
 ## Platform support
 
