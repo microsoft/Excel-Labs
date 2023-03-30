@@ -1,6 +1,6 @@
 # `LABS.GENERATIVEAI` samples
 
-Check out the following examples for generative AI prompt ideas and to learn how to structure formulas.
+Check out the following examples for prompt ideas and to learn how to structure `LABS.GENERATIVEAI` formulas.
 
 1. Analyze public information. Ask a model to summarize a complicated topic.
 

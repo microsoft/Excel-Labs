@@ -22,9 +22,9 @@ While Excel Name Manager lets you name and reuse any formula, including function
 
 See [Advanced formula environment](/advanced-formula-environment/README.md) for more information.
 
-## LABS.GENERATIVEAI function
+## `LABS.GENERATIVEAI` function
 
-This add-in creates a custom function called LABS.GENERATIVEAI that you can use to send prompts from the Excel grid to a generative AI model. LABS.GENERATIVEAI returns the results from the model back to your worksheet.
+`LABS.GENERATIVEAI` is a custom function that enables you to send prompts to a generative AI model and return the responses directly to the Excel grid.
 
 You can send the model simple or complex prompts, such as requests to:
 
@@ -33,7 +33,7 @@ You can send the model simple or complex prompts, such as requests to:
 - Answer factual or creative questions.
 - Produce a response based on a sample.
 
-LABS.GENERATIVEAI allows you to reference other cells in your workbook, and it can be called inside any Excel cell or named formula in the workbook.
+`LABS.GENERATIVEAI` allows you to reference other cells in your workbook, and it can be called inside any Excel cell or named formula in the workbook.
 
 See [LABS.GENERATIVEAI function](/labs-generative-ai/README.md) for more information.
 

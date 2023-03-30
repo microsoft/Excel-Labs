@@ -1,4 +1,4 @@
-# LABS.GENERATIVEAI function, an Excel Labs feature
+# `LABS.GENERATIVEAI` function, an Excel Labs feature
 
 `LABS.GENERATIVEAI` is custom function that allows you to send prompts from the Excel grid to a generative AI model and then return the results from the model directly back to your worksheet.
 
@@ -8,7 +8,7 @@ The custom function includes settings which let you choose from different models
 
 ## Getting started
 
-To experiment with generative AI, start by typing the formula `=LABS.GENERATIVEAI` in a cell. Next, give the formula a prompt to send to OpenAI. Make sure to wrap your prompt in quotation marks, like `=LABS.GENERATIVEAI(“Write a poem about Excel.”)`, and select the Enter key to send the request to OpenAI.
+To experiment with generative AI, start by typing the formula `=LABS.GENERATIVEAI` in a cell. Next, give the formula a prompt to send to the generative AI model. Make sure to wrap your prompt in quotation marks, like `=LABS.GENERATIVEAI(“Write a poem about Excel.”)`, and select the Enter key to send the request.
 
 Use the **Settings** options in the task pane to customize your experience. You can choose from different models, control the default output length of results returned from the models, and more.
 
