@@ -24,11 +24,11 @@ See [Advanced formula environment](/advanced-formula-environment/README.md) for 
 
 ## `LABS.GENERATIVEAI` function
 
-With the announcement of [Microsoft 365 Copilot](https://blogs.microsoft.com/blog/2023/03/16/introducing-microsoft-365-copilot-your-copilot-for-work/), we see great potential in the power of generative AI. `LABS.GENERATIVEAI` is a custom function that enables you to send prompts to a generative AI model and return the responses to the Excel grid. 
+With the announcement of [Microsoft 365 Copilot](https://blogs.microsoft.com/blog/2023/03/16/introducing-microsoft-365-copilot-your-copilot-for-work/), we see great potential in the power of generative AI. `LABS.GENERATIVEAI` is a custom function that enables you to send prompts to a generative AI model and return the responses to the Excel grid.
 
 Using this function, you can test the benefits of generative AI directly in Excel. `LABS.GENERATIVEAI` is not part of Microsoft 365 Copilot but rather a place for you to play and experiment with generative AI today within the Garage framework.
 
-With `LABS.GENERATIVEAI`, you can send the generative AI model simple or complex prompts, such as requests to:
+`LABS.GENERATIVEAI` allows you to send simple or complex prompts to a generative AI model, such as requests to:
 
 - Analyze public information.
 - Process data and define the format.
