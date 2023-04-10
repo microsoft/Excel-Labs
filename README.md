@@ -1,11 +1,11 @@
 # Excel Labs, a Microsoft Garage project
 
-Excel Labs is an Office Add-in for Excel that allows us to release experimental Excel features and gather customer feedback about these features. Some Excel Labs ideas may never be incorporated into Excel, but we think the experimentation and feedback this project offers are vital.
+Excel Labs is an Office Add-in for Excel that allows the Excel team to release experimental Excel features and gather customer feedback about them. Although some of these features may never be incorporated into Excel, this experimentation and feedback is vital.
 
 Excel Labs currently includes two features:
 
 1. Advanced formula environment: An interface designed for authoring, editing, and reusing formulas.
-1. `LABS.GENERATIVEAI`: A custom function that enables you to send prompts to a generative AI model and return the responses directly to the grid.
+1. `LABS.GENERATIVEAI`: A custom function that enables you to send prompts to a generative AI model and return the responses directly to the grid. This is not part of Microsoft 365 Copilot.
 
 The [Microsoft Garage](https://garage.microsoft.com) is an outlet for experimental projects for you to try.
 
@@ -13,7 +13,7 @@ The [Microsoft Garage](https://garage.microsoft.com) is an outlet for experiment
 
 Advanced formula environment makes it easy to create, edit, and reuse formulas and named LAMBDA functions.
 
-While Excel Name Manager lets you name and reuse any formula, including functions defined with LAMBDA, the interface makes it difficult to author these formulas. Common features that make programming easier are missing, such as immediate inline errors and syntax highlighting. Advanced formula environment fills this gap. It’s an interface for the Name Manager that is designed for formula authoring. Using the advanced formula environment, you can:
+While Excel Name Manager lets you name and reuse any formula, including functions defined with LAMBDA, the interface makes it difficult to author these formulas. Common features that make programming easier are missing, such as immediate inline errors and syntax highlighting. Advanced formula environment fills this gap. It’s an interface for the Excel Name Manager that is designed for formula authoring. Using the advanced formula environment, you can:
 
 - Write formulas using an editor that supports inline errors, IntelliSense, comments, and more.
 - Indent formulas, making them easier to read.
@@ -24,9 +24,11 @@ See [Advanced formula environment](/advanced-formula-environment/README.md) for 
 
 ## `LABS.GENERATIVEAI` function
 
-`LABS.GENERATIVEAI` is a custom function that enables you to send prompts to a generative AI model and return the responses directly to the Excel grid.
+With the announcement of [Microsoft 365 Copilot](https://blogs.microsoft.com/blog/2023/03/16/introducing-microsoft-365-copilot-your-copilot-for-work/), we see great potential in the power of generative AI. `LABS.GENERATIVEAI` is a custom function that enables you to send prompts to a generative AI model and return the responses to the Excel grid.
 
-You can send the model simple or complex prompts, such as requests to:
+Using this function, you can test the benefits of generative AI directly in Excel. `LABS.GENERATIVEAI` is not part of Microsoft 365 Copilot but rather a place for you to play and experiment with generative AI today within the Garage framework.
+
+`LABS.GENERATIVEAI` allows you to send simple or complex prompts to a generative AI model, such as requests to:
 
 - Analyze public information.
 - Process data and define the format.

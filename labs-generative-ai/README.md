@@ -6,6 +6,8 @@ You can send the model simple or complex prompts to analyze information, process
 
 The custom function includes settings which let you choose from different models, control the default output length of results returned from the models, limit creativity, and more.
 
+`LABS.GENERATIVEAI` is not part of [Microsoft 365 Copilot](https://blogs.microsoft.com/blog/2023/03/16/introducing-microsoft-365-copilot-your-copilot-for-work/).
+
 ## Getting started
 
 To experiment with generative AI, start by typing the formula `=LABS.GENERATIVEAI` in a cell. Next, give the formula a prompt to send to the generative AI model. Make sure to wrap your prompt in quotation marks, like `=LABS.GENERATIVEAI(“Write a poem about Excel.”)`, and select the Enter key to send the request.
