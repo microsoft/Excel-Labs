@@ -15,7 +15,7 @@ ALIAS = // A well-pondered alias deserves its own line.
             IF( // Output clause of LET on last line following name-value pairs
                 INCREMENT(result)=2, // Condition of IF() on its own line
                 "Cheers!", // Followed by the success case on its own line, etc.
-                "Call Bertram."))); // All terminating parentheses on last line. This is non-negotiable.
+                "Call Bertrand."))); // All terminating parentheses on last line. This is non-negotiable.
 
 // Constant Aliases
 else = TRUE;
@@ -369,7 +369,7 @@ CAGR =
             nominal_growth, ending_period/beginning_period,
             POWER(nominal_growth, 1/p)-1));
 
-FIBONACCI =
+FACTORIAL =
     LAMBDA(
         n,
         IF(
