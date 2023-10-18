@@ -375,4 +375,4 @@ FACTORIAL =
         IF(
             EQUAL(n, 1),
             1,
-            PRODUCT(n, FIBONACCI(DECREMENT(n)))));
+            PRODUCT(n, FACTORIAL(DECREMENT(n)))));
