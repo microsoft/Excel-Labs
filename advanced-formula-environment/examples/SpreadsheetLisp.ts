@@ -1,14 +1,67 @@
-// Spreadsheet Lisp (SL) v0.6.0
-// October 19, 2023
-
-// SL was designed using the Advanced Formula Environment (AFE) from the Excel Labs team of Microsoft Garage.
-// All design decisions codified herein are subject to change following sufficient argumentation.
-
 /*
 
-List of Functions (in current order)
+Spreadsheet Lisp (SL) v0.7.0
 
-// Compatible with .xlsx files:
+Forged in the Advanced Formula Environment (AFE),
+courtesy of the minds on the Excel Labs team of Microsoft Garage.
+
+All design decisions codified herein are subject to emendation,
+useful or otherwise, following sufficient argumentation.
+No rights reserved.
+
+SL bows respectfully to its ancestral list of LISPs:
+(1.5 Common Scheme Racket Pico et.al.)
+
+DISCLAIMER:
+Most SL functions do not require macros to be enabled. [*.xlsx]
+The coolest SL functions require macros to be enabled. [*.xlsm]
+You are thus free, within the bounds of determinism, to choose your path forward.
+
+"For a dreamer is one who can only find his way by moonlight,
+ and his punishment is that he sees the dawn before the rest of the world."
+ - Oscar Wilde
+
+*/
+
+TABLE_OF_CONTENTS =
+    VLIST(
+        "Table of Contents",
+        "Types",
+        "Functions [.xlsm]",
+        "Functions [.xlsx]",
+        "Arcade",
+        "Epilogue");
+
+/*
+Table of Contents
+
+Types:
+Booleans
+Atoms
+
+Macro-dependent functions [*.xlsm]:
+=EVAL(expression)
+=APPLY(functor, context)
+=CURRY(reference, free_variable)
+
+Macro-free functions [*.xlsx]:
+=L(functor_string, [argument], ...)
+=ARITY([argument], ...)
+=IS(argument)
+=NOTERROR(value)
+=PROVIDED(argument)
+=BOTHPROVIDED(argument1, argument2)
+=ISTRUE(value)
+=ISFALSE(value)
+=MAYBE(input)
+=MAYBENOT(potential, otherwise)
+=UNKNOWN(input)
+=KNOWN(input)
+=MISSING(input)
+=SOMETHING(input)
+=TRUTHY(value)
+=FALSY(value)
+=ONE(value)
 =ID(x)
 =CAR(range)
 =_FIRST(range)
@@ -22,7 +75,8 @@ List of Functions (in current order)
 =CONS(head, body)
 =EQ(range)
 =EQUAL(a, b)
-=IS(argument)
+=DIV(numerator, denominator)
+=DIFFERENCE(minuend, subtrahend)
 =VLIST([a], ...)
 =HLIST([a], ...)
 =MEMBER(needle, haystack)
@@ -34,6 +88,7 @@ List of Functions (in current order)
 =DECREMENT(number)
 =INCREMENT(number)
 =CONTAINS(haystack, needle)
+=NOTBLANK(value)
 =HOMOGENOUS(range)
 =HETEROGENOUS(range)
 =SHEETNAME()
@@ -44,6 +99,7 @@ List of Functions (in current order)
 =GETCOL(index, range)
 =GETCOLS(indexes, range)
 =FIRSTWORD(sentence)
+=FIRSTLETTER(text)
 =COLINDEXES(subset, superset)
 =TRIMALL(range)
 =GREATERTHAN(x, y)
@@ -53,12 +109,6 @@ List of Functions (in current order)
 =ORIENTATION(range)
 =CAGR(beginning_value, ending_value, [periods])
 =FACTORIAL(n)
-=NOTERROR(value)
-=PROVIDED(input)
-=MAYBE(input)
-=ISTRUE(value)
-=ISFALSE(value)
-=TRUTHY(value)
 =ALPHABET([vertical])
 =LETTER(reference)
 =NEITHER(this, that)
@@ -74,29 +124,28 @@ List of Functions (in current order)
 =CASE(success, attempt)
 =TYPEDISPATCH(context, case1, result1, [case2], [result2], ...)
 =LENGTH(input)
+=NOTFALSE(condition)
+=NOTEQUAL(this, that)
+=BEFORE(index, range)
+=AFTER(index, range)
+=MAYBEAPPEND(head, body)
+=WITHOUT(range, index_or_string)
+=UNITLIST(list)
+=COLNUM(column_string)
+=LISTINDEX(list, index)
 
-// Compatible with .xlsm files:
-=EVAL(expression)
-=APPLY(functor, context)
-=CURRY(context, free_variable)
+Arcade:
+=FLIPCOIN([times])
+=MAGIC8BALL([question])
+=ROCKPAPERSCISSORS(throw)
+
+Epilogue:
+Fledgling Style Guide
 
 */
 
-// On the Uncommon Conception of Readability, or A Brief Dissertation Regarding Aesthetic Principia
-ALIAS = // A well-pondered alias deserves its own line.
-    LAMBDA( // LAMBDA, our liberator, also deserves its own line.
-        parameter, [optional], // Inputs share a single line, unless there be egregiously(?) many.
-        LET( // The output clause of LAMBDA occupies the line following inputs.
-            first, ID(parameter), // LET name-value pairings share a line.
-            _range, {1,2,3,4,5;6,7,8,9,0}, // Helper aliases are encouraged to reduce line lengths.
-            result, INDEX(_range, 1, 1), // Adequately-concise Excel functions can fit on one line.
-            IF( // THe output clause of LET, like LAMBDA, occupies the line following name-value pairs.
-                INCREMENT(result)=2, // The condition of IF() gets its own line in most cases.
-                "Cheers!", // The success case occupies its own line.
-                "Call Bertrand."))); // Terminating parentheses live on the last line. (Non-negotiable) 
-
 ///
-/// Top-level Aliases
+/// Types
 ///
 
 // Booleans
@@ -105,9 +154,224 @@ t = TRUE;
 f = FALSE;
 null = #NULL!;
 
+// Atoms
+ATOMS =
+    HLIST("number", "string", "boolean", "error");
+
+ISATOM =
+    LAMBDA(
+        thing,
+        MEMBER(TYPESTRING(thing), ATOMS));
+
+ISRATIONAL =
+    LAMBDA(
+        value,
+        NOTERROR(DIV(value, 1)));
+
+///
+/// Macro-dependent Functions
+///
+
+// [A1]: '(sum 1 2 3 4 5)
+// =EVAL(A1) -> 15
+EVAL =
+    LAMBDA(
+        expression,
+        LET(
+            expr,
+                TRIM(expression),
+            fulcrum,
+                FIND(" ", expr),
+            characters,
+                LEN(expr),
+            functor,
+                MID(expr, 2, fulcrum-2),
+            context,
+                RIGHT(expr, characters-fulcrum),
+            csv,
+                SUBSTITUTE(context, " ", ", "),
+            formula,
+                FORMAT("={1}({2}", functor, csv),
+            VALUE(EVALUATE(formula))));
+
+// APPLY currently only accepts two strings
+// =APPLY("sum", "1,2,3") -> 6
+APPLY =
+    LAMBDA(
+        functor, context,
+        EVAL(
+            FORMAT(
+                "({1} {2})",
+                functor,
+                TRIM(SUBSTITUTE(context, ",", " ")))));
+
+// [A1] =SUM(1, 2) -> 3
+// =CURRY(A1, 3) -> 6
+CURRY =
+    LAMBDA(
+        reference, free_variable,
+        LET(
+            formula, FORMULATEXT(reference),
+            without_closing_paren,
+                LEFT(formula, DECREMENT(LEN(formula))),
+            EVALUATE(
+                FORMAT(
+                    "{1}, {2})",
+                    without_closing_paren,
+                    free_variable))));
 ///
 /// Functions
 ///
+
+// L/1[4]: The Lisp Function is a middle-way approach between Excel Formulas and Lisp Forms.
+// =L("sum", 1, 2, 3) -> 6
+// =L("product", 5, 5) -> 25 
+L =
+    LAMBDA(
+        functor_string, [_1], [_2], [_3], [_4],
+        LET(
+            arity, ARITY(functor_string, _1, _3, _3, _4),
+            _functor, TEXT(functor_string, "0"),
+            SWITCH(
+                arity,
+                1, EVAL(FORMAT("({1})", _functor)),
+                2, EVAL(FORMAT("({1} {2})", _functor, _1)),
+                3, EVAL(FORMAT("({1} {2} {3})", _functor, _1, _2)),
+                4, EVAL(FORMAT("({1} {2} {3} {4})", _functor, _1, _2, _3)),
+                5, EVAL(FORMAT("({1} {2} {3} {4} {5})", _functor, _1, _2, _3, _4)))));
+
+// ARITY/[9]: The Arity function determines how many values were provided to a given function.
+// =ARITY(0/0) -> 1
+// =ARITY(A1:A5) -> 1
+// =ARITY(1, 2, 3) -> 3
+// =ARITY("a", "b", "c", "d") -> 4
+ARITY =
+    LAMBDA(
+        [_1], [_2], [_3], [_4], [_5], [_6], [_7], [_8], [_9],
+        SUM(IS(_1), IS(_2), IS(_3), IS(_4), IS(_5), IS(_6), IS(_7), IS(_8), IS(_9)));
+
+// IS/1: The Is helper function aids ARITY() by determining whether an optional argument was provided.
+IS =
+    LAMBDA(
+        argument,
+        IF(
+            ISOMITTED(argument),
+            0,
+            1));
+
+// =NOTERROR(123) -> TRUE
+// =NOTERROR(#N/A!) -> FALSE
+NOTERROR =
+    LAMBDA(
+        value,
+        NOT(ISERROR(value)));
+
+PROVIDED =
+    LAMBDA(
+        input,
+        AND(
+            NOT(ISOMITTED(input))));
+
+BOTHPROVIDED =
+    LAMBDA(
+        input1, input2,
+        AND(
+            NOT(ISOMITTED(input1)),
+            NOT(ISOMITTED(input2))));
+
+// =ISTRUE(TRUE) -> TRUE
+// =ISTRUE(FALSE) -> FALSE
+ISTRUE =
+    LAMBDA(
+        value,
+        AND(
+            TYPESTRING(value)="boolean",
+            EQUAL(value, t)));
+
+// =ISFALSE(TRUE) -> FALSE
+// =ISFALSE(FALSE) -> TRUE
+ISFALSE =
+    LAMBDA(
+        value,
+        AND(
+            TYPESTRING(value)="boolean",
+            EQUAL(value, f)));
+
+// =MAYBE(123) -> 123
+// =MAYBE(TRUE) -> TRUE
+// =MAYBE(#NULL!) -> FALSE
+// =MAYBE([missing_argument]) -> FALSE
+MAYBE =
+    LAMBDA(
+        input,
+        IF(
+            AND(
+                NOTERROR(input),
+                PROVIDED(input)),
+            input,
+            ERROR.TYPE(12)));
+
+// =MAYBENOT(0, 1) -> 0
+// =MAYBENOT(0/0, 1) -> 1
+// =MAYBENOT("Provided", "Missing") -> "Provided"
+// =MAYBENOT(, "Missing") -> "Missing"
+MAYBENOT =
+    LAMBDA(
+        potential, otherwise,
+        IF(
+            SOMETHING(potential),
+            potential,
+            otherwise));
+
+UNKNOWN =
+    LAMBDA(
+        input,
+        IF(
+            ISERROR(input),
+            EQUAL(ERROR.TYPE(input), 12)));
+
+KNOWN =
+    LAMBDA(
+        input,
+        NOT(UNKNOWN(input)));
+
+MISSING =
+    LAMBDA(
+        input,
+        ISOMITTED(input));
+
+SOMETHING =
+    LAMBDA(
+        input,
+        AND(
+            NOTERROR(input),
+            PROVIDED(input)));
+
+// =TRUTHY(1) -> TRUE
+// =TRUTHY(2) -> FALSE
+// =TRUTHY(TRUE) -> TRUE
+TRUTHY =
+    LAMBDA(
+        value,
+        OR(
+            EQUAL(value, 1),
+            EQUAL(value, t),
+            EQUAL(UPPER(value), "TRUE")));
+
+FALSY =
+    LAMBDA(
+        value,
+        MEMBER(
+            MAYBE(value),
+            HLIST("", f, 0)));
+
+// =ONE(0) -> FALSE
+// =ONE(1) -> TRUE
+// =ONE(2) -> FALSE
+ONE =
+    LAMBDA(
+        value,
+        EQUAL(1, value));
 
 // =ID(123) -> 123
 ID =
@@ -210,41 +474,61 @@ EQUAL =
         a, b,
         a=b);
 
-IS =
+DIV =
     LAMBDA(
-        argument,
-        IF(
-            ISOMITTED(argument),
-            0,
-            1));
+        numerator, denominator,
+        numerator / denominator);
+
+DIFFERENCE =
+    LAMBDA(
+        minuend, subtrahend,
+        minuend-subtrahend);
 
 // Builds a single-column (vertical) range
+// Syntactic sugar for {1;2;3;4;5;...}
 VLIST =
     LAMBDA(
-        [a], [b], [c], [d], [e], [f], [g], [h], [i], [j],
+        [_1], [_2], [_3], [_4], [_5], [_6], [_7], [_8], [_9], [_10],
+        [_11], [_12], [_13], [_14], [_15], [_16], [_17], [_18], [_19], [_20],
         LET(
-            row_count,SUM(IS(a), IS(b), IS(c), IS(d), IS(e), IS(f), IS(g), IS(h), IS(i), IS(j)),
+            row_count,
+                SUM(
+                    IS(_1), IS(_2), IS(_3), IS(_4), IS(_5), IS(_6), IS(_7),
+                    IS(_8), IS(_9), IS(_10), IS(_11), IS(_12), IS(_13), IS(_14),
+                    IS(_15), IS(_16), IS(_17), IS(_18), IS(_19), IS(_20)),
             MAKEARRAY(
                 row_count,
                 1,
                 LAMBDA(
                     row,
-                    _,
-                    CHOOSE(row, a, b, c, d, e, f, g, h, i, j)))));
+                    _col,
+                    CHOOSE(
+                        row,
+                        _1, _2, _3, _4, _5, _6, _7, _8, _9, _10,
+                        _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)))));
 
 // Builds a single-row (horizontal) range
+// Syntactic sugar for {1,2,3,4,5,...}
 HLIST =
     LAMBDA(
-        [a], [b], [c], [d], [e], [f], [g], [h], [i], [j],
+        [_1], [_2], [_3], [_4], [_5], [_6], [_7], [_8], [_9], [_10],
+        [_11], [_12], [_13], [_14], [_15], [_16], [_17], [_18], [_19], [_20],
         LET(
-            col_count,SUM(IS(a), IS(b), IS(c), IS(d), IS(e), IS(f), IS(g), IS(h), IS(i), IS(j)),
+            column_count,
+                SUM(
+                    IS(_1), IS(_2), IS(_3), IS(_4), IS(_5), IS(_6), IS(_7),
+                    IS(_8), IS(_9), IS(_10), IS(_11), IS(_12), IS(_13), IS(_14),
+                    IS(_15), IS(_16), IS(_17), IS(_18), IS(_19), IS(_20)),
             MAKEARRAY(
                 1,
-                col_count,
+                column_count,
                 LAMBDA(
-                    _,
+                    _row,
                     col,
-                    CHOOSE(col, a, b, c, d, e, f, g, h, i, j)))));
+                    CHOOSE(
+                        col,
+                        _1, _2, _3, _4, _5, _6, _7, _8, _9, _10,
+                        _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)))));
 
 // =MEMBER(1, {1,2,3}) -> TRUE
 // =MEMBER(1, {2,3,4}) -> FALSE
@@ -319,6 +603,11 @@ CONTAINS =
                 NOT(ISERROR(FIND(needle, haystack))),
                 OR(EXACT(needle, haystack)))));
 
+NOTBLANK =
+    LAMBDA(
+        value,
+        NOTEQUAL(value, ""));
+
 HOMOGENOUS =
     LAMBDA(
         range,
@@ -329,7 +618,7 @@ HETEROGENOUS =
         range,
         NOT(HOMOGENOUS(range)));
 
-// Workbook must be saved
+// Workbook must be saved to access "filename"
 SHEETNAME =
     LAMBDA(
         LET(
@@ -449,6 +738,12 @@ FIRSTWORD =
         sentence,
         LEFT(sentence, TRIM(FIND(" ", sentence)-1)));
 
+// =FIRSTLETTER("Spreadsheet") -> "S"
+FIRSTLETTER =
+    LAMBDA(
+        text,
+        LEFT(text, 1));
+
 // =COLINDEXES({"b","d"}, {"a","b","c""d","e"}) -> {2,4}
 COLINDEXES =
     LAMBDA(
@@ -535,58 +830,6 @@ FACTORIAL =
             LTE(n, 1),
             1,
             PRODUCT(n, FACTORIAL(DECREMENT(n)))));
-
-// =NOTERROR(123) -> TRUE
-// =NOTERROR(#N/A!) -> FALSE
-NOTERROR =
-    LAMBDA(
-        value,
-        NOT(ISERROR(value)));
-
-PROVIDED =
-    LAMBDA(
-        input,
-        NOT(ISOMITTED(input)));
-
-// =MAYBE(123) -> 123
-// =MAYBE(TRUE) -> TRUE
-// =MAYBE(#NULL!) -> FALSE
-// =MAYBE([missing_argument]) -> FALSE
-MAYBE =
-    LAMBDA(
-        input,
-        IF(
-            AND(
-                NOTERROR(input),
-                PROVIDED(input)),
-            input));
-
-// =ISTRUE(TRUE) -> TRUE
-// =ISTRUE(FALSE) -> FALSE
-ISTRUE =
-    LAMBDA(
-        value,
-        AND(
-            TYPESTRING(value)="boolean",
-            EQUAL(value, t)));
-
-// =ISFALSE(TRUE) -> FALSE
-// =ISFALSE(FALSE) -> TRUE
-ISFALSE =
-    LAMBDA(
-        value,
-        AND(
-            TYPESTRING(value)="boolean",
-            EQUAL(value, f)));
-
-// =TRUTHY(1) -> TRUE
-// =TRUTHY(TRUE) -> TRUE
-TRUTHY =
-    LAMBDA(
-        value,
-        OR(
-            EQUAL(value, 1),
-            value=TRUE));
 
 ALPHABET =
     LAMBDA(
@@ -779,54 +1022,192 @@ LENGTH =
             "string", LEN(input),
             else, COUNTA(input)));
 
-// The following functions require a
-// macro-enabled workbook (.xlsm)
-
-// [A1] '(sum 1 2 3 4 5)
-// =EVAL(A1) -> 15
-EVAL =
+NOTFALSE =
     LAMBDA(
-        expression,
+        condition,
+        AND(
+            EQUAL(TYPESTRING(condition), "boolean"),
+            NOT(EQUAL(condition, f))));
+
+NOTEQUAL =
+    LAMBDA(
+        this, that,
+        NOT(EQUAL(this, that)));
+
+// =BEFORE(4, {1,2,3,4,5}) -> {1,2,3}
+BEFORE =
+    LAMBDA(
+        index, range,
+        MAKEARRAY(
+            IF(HORIZONTAL(range), 1, MIN(DECREMENT(index), LENGTH(range))),
+            IF(HORIZONTAL(range), MIN(DECREMENT(index), LENGTH(range)), 1),
+            LAMBDA(
+                row, col,
+                INDEX(range, row, col))));
+
+// =AFTER(2, {1,2,3,4,5}) -> {3,4,5}
+AFTER =
+    LAMBDA(
+        index, list,
         LET(
-            expr,
-                TRIM(expression),
-            fulcrum,
-                FIND(" ", expr),
-            characters,
-                LEN(expr),
-            functor,
-                MID(expr, 2, fulcrum-2),
-            context,
-                RIGHT(expr, characters-fulcrum),
-            csv,
-                SUBSTITUTE(context, " ", ", "),
-            formula,
-                FORMAT("={1}({2}", functor, csv),
-            VALUE(EVALUATE(formula))));
+            idx, MAX(index, 0), 
+            MAKEARRAY(
+                IF(HORIZONTAL(list), 1, DIFFERENCE(ROWS(list), idx)),
+                IF(HORIZONTAL(list), DIFFERENCE(COLUMNS(list), idx), 1),
+                LAMBDA(
+                    row, col,
+                    INDEX(
+                        list,
+                        IF(HORIZONTAL(list), 1, SUM(row, idx)),
+                        IF(HORIZONTAL(list), SUM(col, idx), 1))))));
 
-// APPLY is Under construction
-// Currently only accepts two strings
-// =APPLY("sum", "1,2,3") -> 6
-APPLY =
+MAYBEAPPEND =
     LAMBDA(
-        functor, context,
-        EVAL(
-            FORMAT(
-                "({1} {2})",
-                functor,
-                TRIM(SUBSTITUTE(context, ",", " ")))));
-
-// [A1] =SUM(1, 2) -> 3
-// =CURRY(A1, 3) -> 6 
-CURRY =
-    LAMBDA(
-        context, free_variable,
+        head, body,
         LET(
-            formula, FORMULATEXT(context),
-            without_closing_paren,
-                LEFT(formula, DECREMENT(LEN(formula))),
-            EVALUATE(
-                FORMAT(
-                    "{1}, {2})",
-                    without_closing_paren,
-                    free_variable))));
+            _head, MAYBE(head),
+            _body, MAYBE(body),
+            IFS(
+                AND(SOMETHING(_head), SOMETHING(_body)),
+                    APPEND(_head, _body),
+                ISERROR(body), _head,
+                else, _body)));
+
+// REMOVE/2: Removes an item at a given index from a given list 
+// =REMOVE(3, {5,6,7,8,9}) -> {5,6,8,9}
+WITHOUT =
+    LAMBDA(
+        range, index_or_string,
+        LET(
+            index,
+                IF(
+                    ISNUMBER(index_or_string),
+                    index_or_string,
+                    MATCH(index_or_string, range, 0)),
+            MAYBEAPPEND(
+                BEFORE(index, range),
+                AFTER(index, range))));
+
+// UNITLIST/1: Determines whether a list contains a single value
+UNITLIST =
+    LAMBDA(
+        list,
+        ONE(LENGTH(list)));
+
+// =COLNUM(A1) -> 1
+// =COLNUM(B1) -> 2
+// =COLNUM(Z1) -> 26
+// =COLNUM(AA1) -> 27
+COLNUM =
+    LAMBDA(
+        column_string,
+        SWITCH(
+            LENGTH(column_string),
+            1, MATCH(UPPER(column_string), ALPHABET(), 0),
+            2, 
+            LET(
+                first, MATCH(UPPER(LEFT(column_string, 1)), ALPHABET(), 0),
+                second, MATCH(UPPER(RIGHT(column_string, 1)), ALPHABET(), 0),
+                SUM(26, PRODUCT(26, DECREMENT(first)), second))));
+
+// =LISTINDEX(HLIST("a", "b", "c", "d"), 3) -> "c"
+LISTINDEX =
+    LAMBDA(
+        list, index,
+        IF(
+            HORIZONTAL(list),
+            INDEX(list, 1, index),
+            INDEX(list, index, 1)));
+
+///
+/// Arcade
+///
+
+// =FLIPCOIN() -> "Heads"
+// =FLIPCOIN(3) -> {"Heads";"Tails";"Tails"}
+FLIPCOIN =
+    LAMBDA(
+        [times],
+        LET(
+            _TOSS, LAMBDA(CHOOSE(RANDBETWEEN(1, 2), "Heads", "Tails")),
+            _times, IF(PROVIDED(times), times, 1),
+            IF(
+                LTE(_times, 1),
+                _TOSS(),
+                VSTACK(
+                    _TOSS(),
+                    FLIPCOIN(DECREMENT(_times))))));
+
+// =MAGIC8BALL("Is Spreadsheet Lisp fun to use?") -> "It is decidedly so."
+MAGIC8BALL =
+    LAMBDA(
+        [question],
+        IF(
+            OR(PROVIDED(question), ISBLANK(MAYBE(question))),
+            CHOOSE(
+                RANDBETWEEN(1, 20),
+                "It is certain",
+                "Reply hazy, try again",
+                "It is decidedly so",
+                "Without a doubt",
+                "Don't count on it",
+                "Yes definitely",
+                "Ask again later",
+                "You may rely on it",
+                "My reply is no",
+                "As I see it, yes",
+                "Better not tell you now",
+                "Most likely",
+                "My sources say no",
+                "Outlook good",
+                "Cannot predict now",
+                "Yes",
+                "Outlook not so good",
+                "Signs point to yes",
+                "Concentrate and ask again",
+                "Very doubtful"),
+            "Ask, and it will be answered."));
+
+// =ROCKPAPERSCISSORS("Rock") -> "You threw ROCK. Excel threw SCISSORS. You win: Rock smashes Scissors."
+ROCKPAPERSCISSORS =
+    LAMBDA(
+        throw,
+        LET(
+            _human, UPPER(throw),
+            _robot, CHOOSE(RANDBETWEEN(1, 3), "ROCK", "PAPER", "SCISSORS"),
+            CONCAT(
+                FORMAT("You threw {1}. Excel threw {2}. ", _human, _robot),
+                IFS(
+                    EQUAL(_human, _robot),
+                        FORMAT("Tie: {1} vs. {1}", _human),
+                    AND(EQUAL(_human, "PAPER"), EQUAL(_robot, "ROCK")),
+                        "You win: Paper covers rock.",
+                    AND(EQUAL(_human, "PAPER"), EQUAL(_robot, "SCISSORS")),
+                        "You lose: Scissors cuts paper.",
+                    AND(EQUAL(_human, "ROCK"), EQUAL(_robot, "PAPER")),
+                        "You lose: Paper covers rock.",
+                    AND(EQUAL(_human, "ROCK"), EQUAL(_robot, "SCISSORS")),
+                        "You win: Rock smashes scissors.",
+                    AND(EQUAL(_human, "SCISSORS"), EQUAL(_robot, "ROCK")),
+                        "You lose: Rock smashes scissors.",
+                    AND(EQUAL(_human, "SCISSORS"), EQUAL(_robot, "PAPER")),
+                        "You win: Scissors cuts paper.",
+                    else,
+                        "Invalid throw. Please choose Rock, Paper, or Scissors"))));
+
+///
+/// An Epilogue of Miscellany
+///
+
+// On the Uncommon Conception of Readability, or A Brief Dissertation Regarding Aesthetic Principia
+ALIAS = // A well-pondered alias deserves its own line.
+    LAMBDA( // LAMBDA, our liberator, also deserves its own line.
+        parameter, [optional], // Inputs share a single line, unless there be egregiously(?) many.
+        LET( // The output clause of LAMBDA on the line following inputs.
+            first, ID(parameter), // LET name-value pairings share a line.
+            _range, {1,2,3,4,5;6,7,8,9,0}, // Helper aliases are encouraged to reduce line lengths.
+            result, INDEX(_range, 1, 1), // Adequately-concise Excel functions can fit on one line.
+            IF( // The output clause of LET, like LAMBDA, occupies the line following name-value pairs.
+                EQUAL(2, INCREMENT(result)), // IF condition on its own line, preferred over one-liner.
+                "Cheers!", // The success case occupies its own line.
+                "Call Bertrand."))); // Terminating parentheses live on the last line. (Non-negotiable)
