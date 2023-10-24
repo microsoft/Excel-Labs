@@ -5,10 +5,6 @@ Spreadsheet Lisp (SL) v0.7.0
 Forged in the Advanced Formula Environment (AFE),
 courtesy of the minds on the Excel Labs team of Microsoft Garage.
 
-All design decisions codified herein are subject to emendation,
-useful or otherwise, following sufficient argumentation.
-No rights reserved.
-
 SL bows respectfully to its ancestral list of LISPs:
 (1.5 Common Scheme Racket Pico et.al.)
 
