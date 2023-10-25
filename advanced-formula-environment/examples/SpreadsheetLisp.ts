@@ -8,11 +8,6 @@ courtesy of the minds on the Excel Labs team of Microsoft Garage.
 SL bows respectfully to its ancestral list of LISPs:
 (1.5 Common Scheme Racket Pico et.al.)
 
-DISCLAIMER:
-Most SL functions do not require macros to be enabled. [*.xlsx]
-The coolest SL functions require macros to be enabled. [*.xlsm]
-You are thus free, within the bounds of determinism, to choose your path forward.
-
 "For a dreamer is one who can only find his way by moonlight,
  and his punishment is that he sees the dawn before the rest of the world."
  - Oscar Wilde
@@ -35,12 +30,7 @@ Types:
 Booleans
 Atoms
 
-Macro-dependent functions [*.xlsm]:
-=EVAL(expression)
-=APPLY(functor, context)
-=CURRY(reference, free_variable)
-
-Macro-free functions [*.xlsx]:
+Functions:
 =L(functor_string, [argument], ...)
 =ARITY([argument], ...)
 =IS(argument)
@@ -165,76 +155,8 @@ ISRATIONAL =
         NOTERROR(DIV(value, 1)));
 
 ///
-/// Macro-dependent Functions
-///
-
-// [A1]: '(sum 1 2 3 4 5)
-// =EVAL(A1) -> 15
-EVAL =
-    LAMBDA(
-        expression,
-        LET(
-            expr,
-                TRIM(expression),
-            fulcrum,
-                FIND(" ", expr),
-            characters,
-                LEN(expr),
-            functor,
-                MID(expr, 2, fulcrum-2),
-            context,
-                RIGHT(expr, characters-fulcrum),
-            csv,
-                SUBSTITUTE(context, " ", ", "),
-            formula,
-                FORMAT("={1}({2}", functor, csv),
-            VALUE(EVALUATE(formula))));
-
-// APPLY currently only accepts two strings
-// =APPLY("sum", "1,2,3") -> 6
-APPLY =
-    LAMBDA(
-        functor, context,
-        EVAL(
-            FORMAT(
-                "({1} {2})",
-                functor,
-                TRIM(SUBSTITUTE(context, ",", " ")))));
-
-// [A1] =SUM(1, 2) -> 3
-// =CURRY(A1, 3) -> 6
-CURRY =
-    LAMBDA(
-        reference, free_variable,
-        LET(
-            formula, FORMULATEXT(reference),
-            without_closing_paren,
-                LEFT(formula, DECREMENT(LEN(formula))),
-            EVALUATE(
-                FORMAT(
-                    "{1}, {2})",
-                    without_closing_paren,
-                    free_variable))));
-///
 /// Functions
 ///
-
-// L/1[4]: The Lisp Function is a middle-way approach between Excel Formulas and Lisp Forms.
-// =L("sum", 1, 2, 3) -> 6
-// =L("product", 5, 5) -> 25 
-L =
-    LAMBDA(
-        functor_string, [_1], [_2], [_3], [_4],
-        LET(
-            arity, ARITY(functor_string, _1, _3, _3, _4),
-            _functor, TEXT(functor_string, "0"),
-            SWITCH(
-                arity,
-                1, EVAL(FORMAT("({1})", _functor)),
-                2, EVAL(FORMAT("({1} {2})", _functor, _1)),
-                3, EVAL(FORMAT("({1} {2} {3})", _functor, _1, _2)),
-                4, EVAL(FORMAT("({1} {2} {3} {4})", _functor, _1, _2, _3)),
-                5, EVAL(FORMAT("({1} {2} {3} {4} {5})", _functor, _1, _2, _3, _4)))));
 
 // ARITY/[9]: The Arity function determines how many values were provided to a given function.
 // =ARITY(0/0) -> 1
@@ -265,8 +187,7 @@ NOTERROR =
 PROVIDED =
     LAMBDA(
         input,
-        AND(
-            NOT(ISOMITTED(input))));
+        NOT(ISOMITTED(input)));
 
 BOTHPROVIDED =
     LAMBDA(
