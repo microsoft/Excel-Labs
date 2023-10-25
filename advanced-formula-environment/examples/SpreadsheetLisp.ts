@@ -18,8 +18,7 @@ TABLE_OF_CONTENTS =
     VLIST(
         "Table of Contents",
         "Types",
-        "Functions [.xlsm]",
-        "Functions [.xlsx]",
+        "Functions",
         "Arcade",
         "Epilogue");
 
