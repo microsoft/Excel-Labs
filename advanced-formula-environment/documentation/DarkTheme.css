@@ -12,11 +12,13 @@ Additional dark theme tips:
    b. Font color: white (bold)
 
 To use this theme:
-1. Open the Advanced Formula Editor (AFE)
+1. Open the Advanced Formula Environment (AFE)
 2. Click the Modules button at the top of the AFE
 3. Right-click the ExcelApi footer at the bottom of the AFE
 4. Click Inspect
-5. With the Elements tab selected at the top of the DevTools window, and the Styles tab selected in the CSS pane on the right, click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
+5. With the Elements tab selected at the top of the DevTools window,
+   and the Styles tab selected in the CSS pane on the right,
+   click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
 6. Double-click the blue "inspector-stylesheet" link that appears.
 7. Paste the following CSS into the inspector-stylesheet window and hit Ctrl+S to save:
 
