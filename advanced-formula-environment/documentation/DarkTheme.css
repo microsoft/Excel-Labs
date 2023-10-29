@@ -1,0 +1,153 @@
+/*
+
+Noir
+
+A dark theme for the Advanced Formula Environment by the Excel Labs team of Microsoft Garage.
+Inspired by the Ariake Dark theme from VS Code.
+
+Additional dark theme tips:
+1. File > Options > General > Personalize your copy of Office > Office Theme > Black
+2. Select all cells in current tab:
+   a. Fill color: black
+   b. Font color: white (bold)
+
+To use this theme:
+1. Open the Advanced Formula Editor (AFE)
+2. Click the Modules button at the top of the AFE
+3. Right-click the ExcelApi footer at the bottom of the AFE
+4. Click Inspect
+5. With the Elements tab selected at the top of the DevTools window, and the Styles tab selected in the CSS pane on the right, click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
+6. Double-click the blue "inspector-stylesheet" link that appears.
+7. Paste the following CSS into the inspector-stylesheet window and hit Ctrl+S to save:
+
+*/
+
+/* Cursor */
+.monaco-editor.vs .cursor,
+.monaco-editor.vs-dark .cursor {
+    background-color: white !important;
+}
+
+/* Top-level menu bar */
+#rootDiv > div > div.navBar-351.body-370 {
+    background-color: black !important;
+}
+
+/* Top-level sandwich button */
+#rootDiv > div > div.navBar-351.body-370 > div:nth-child(2) > div,
+#rootDiv > div > div.navBar-351.body-370 > div:nth-child(2) > div > div.ms-OverflowSet.ms-CommandBar-secondaryCommand.secondarySet-399 > div > button {
+    background-color: black !important;
+}
+
+/* Module tabs menu bar */
+#rootDiv > div > div.contentRoot-130 > div.css-109 > div {
+    background-color: black !important;
+}
+
+/* Module tab text */
+.ms-Button {
+    color: #b9bed5 !important;
+}
+
+/* Module tab text */
+.ms-Button:hover {
+    background-color: rgb(37, 36, 35) !important;
+    color: #d1d5e8 !important;
+}
+
+/* Main editor */
+#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background {
+    background-color: black !important;
+}
+
+/* Line numbers gutter */
+#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.margin > div.margin-view-overlays {
+    background-color: black !important;
+}
+
+/* ExcelApi footer bar */
+#rootDiv > div > div.css-353 {
+    background-color: black !important;
+    border-top: 1px solid white;
+}
+
+/* Line numbers text */
+.line-numbers {
+    color: #b9bed5 !important;
+}
+
+/* Active line numbers text */
+.active-line-number {
+    color: white !important;
+}
+
+/* Semicolons, commas, and equal sign */
+.mtk1 {
+    color: #967bb6  !important;
+}
+
+/* Boolean literals */
+.mtk6 {
+    color:  white  !important;
+}
+
+/* Number literals */
+.mtk7 {
+    color: #93DDFB !important;
+}
+
+/* Comments */
+.mtk9 {
+    color: #555C77 !important;
+}
+
+/* String literals */
+.mtk13 {
+    color:  #93DDFB !important;
+}
+
+/* Built-in Excel functions */
+.mtk14 {
+    color: white !important;
+}
+
+/* Arguments/parameters */
+.mtk15 {
+    color: #B9BED5 !important;
+}
+
+/* LAMBDA & LET */
+.mtk18 {
+    color: #fff !important;
+}
+
+/* Custom/UDF names */
+.mtk23 {
+    color: white  !important;
+}
+
+/* Selected line border */
+.monaco-editor .view-overlays .current-line {
+    border: 0px solid #eeeeee !important;
+}
+
+/* Indentation indicator lines */
+.monaco-editor .lines-content .core-guide-indent {
+    box-shadow: 1px 0 0 0 #555C77 inset !important;
+}
+
+.bracket-highlighting-1 {
+    color: #b19cd9 !important;
+}
+
+.bracket-highlighting-2 {
+    color: #FF69B4 !important;
+}
+
+.bracket-highlighting-3 {
+    color: #b19cd9 !important;
+}
+
+.bracket-highlighting-4 {
+    color: #FF69B4 !important;
+}
