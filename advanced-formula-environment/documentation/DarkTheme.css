@@ -1,26 +1,28 @@
 /*
 
-Noir
+Excel Noir
 
-A dark theme for the Advanced Formula Environment by the Excel Labs team of Microsoft Garage.
+A dark theme for the Advanced Formula Environment, by the Excel Labs team of Microsoft Garage.
 Inspired by the Ariake Dark theme from VS Code.
 [https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark]
 
 To use this theme:
-1. Open the Advanced Formula Environment (AFE)
-2. Right-click the ExcelApi footer at the bottom of the AFE
-3. Click Inspect
+1. Open the Advanced Formula Environment (AFE);
+2. Right-click the ExcelApi footer at the bottom of the AFE;
+3. Click Inspect;
 4. With the Elements tab selected at the top of the DevTools window,
    and the Styles tab selected in the CSS pane on the right,
-   click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
-5. Double-click the blue "inspector-stylesheet" link that appears.
-6. Paste the contents of this file into the inspector-stylesheet window and hit Ctrl+S to save:
+   click the "New Style Rule" (plus-sign) just to the right of the "Filter" input/textbox;
+5. Double-click the blue "inspector-stylesheet" link that appears;
+6. Paste the contents of this file into the inspector-stylesheet window;
+7. Hit Ctrl+S to save (this does not save the stylesheet, but it feels good).
 
-"Extra dark" theme tips:
+"Midnight" Mode:
 1. File > Options -> General -> Personalize your copy of Office -> Office Theme -> Black
 2. Select all cells in current tab:
    a. Fill color: black
    b. Font color: white (bold)
+3. Toggle Full-screen mode: Ctrl + Shift + F1
 
 */
 
