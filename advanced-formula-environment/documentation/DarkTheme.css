@@ -4,23 +4,31 @@ Noir
 
 A dark theme for the Advanced Formula Environment by the Excel Labs team of Microsoft Garage.
 Inspired by the Ariake Dark theme from VS Code.
+[https://marketplace.visualstudio.com/items?itemName=wart.ariake-dark]
 
-Additional dark theme tips:
-1. File > Options > General > Personalize your copy of Office > Office Theme > Black
+To use this theme:
+1. Open the Advanced Formula Environment (AFE)
+2. Right-click the ExcelApi footer at the bottom of the AFE
+3. Click Inspect
+4. With the Elements tab selected at the top of the DevTools window,
+   and the Styles tab selected in the CSS pane on the right,
+   click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
+5. Double-click the blue "inspector-stylesheet" link that appears.
+6. Paste the contents of this file into the inspector-stylesheet window and hit Ctrl+S to save:
+
+"Extra dark" theme tips:
+1. File > Options -> General -> Personalize your copy of Office -> Office Theme -> Black
 2. Select all cells in current tab:
    a. Fill color: black
    b. Font color: white (bold)
 
-To use this theme:
-1. Open the Advanced Formula Environment (AFE)
-2. Click the Modules button at the top of the AFE
-3. Right-click the ExcelApi footer at the bottom of the AFE
-4. Click Inspect
-5. With the Elements tab selected at the top of the DevTools window,
-   and the Styles tab selected in the CSS pane on the right,
-   click the "New Style Rule" plus-sign to the right of the "Filter" input/textbox.
-6. Double-click the blue "inspector-stylesheet" link that appears.
-7. Paste the following CSS into the inspector-stylesheet window and hit Ctrl+S to save:
+*/
+
+/*
+
+
+    Global Styles
+
 
 */
 
@@ -39,38 +47,6 @@ To use this theme:
 #rootDiv > div > div.navBar-351.body-370 > div:nth-child(2) > div,
 #rootDiv > div > div.navBar-351.body-370 > div:nth-child(2) > div > div.ms-OverflowSet.ms-CommandBar-secondaryCommand.secondarySet-399 > div > button {
     background-color: black !important;
-}
-
-/* Module tabs menu bar */
-#rootDiv > div > div.contentRoot-130 > div.css-109 > div {
-    background-color: black !important;
-}
-
-/* Module tab text */
-.ms-Button {
-    color: #b9bed5 !important;
-}
-
-/* Module tab text */
-.ms-Button:hover {
-    background-color: rgb(37, 36, 35) !important;
-    color: #d1d5e8 !important;
-}
-
-/* Main editor */
-#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background {
-    background-color: black !important;
-}
-
-/* Line numbers gutter */
-#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.margin > div.margin-view-overlays {
-    background-color: black !important;
-}
-
-/* ExcelApi footer bar */
-#rootDiv > div > div.css-353 {
-    background-color: black !important;
-    border-top: 1px solid white;
 }
 
 /* Line numbers text */
@@ -128,16 +104,6 @@ To use this theme:
     color: white  !important;
 }
 
-/* Selected line border */
-.monaco-editor .view-overlays .current-line {
-    border: 0px solid #eeeeee !important;
-}
-
-/* Indentation indicator lines */
-.monaco-editor .lines-content .core-guide-indent {
-    box-shadow: 1px 0 0 0 #555C77 inset !important;
-}
-
 .bracket-highlighting-1 {
     color: #b19cd9 !important;
 }
@@ -152,4 +118,104 @@ To use this theme:
 
 .bracket-highlighting-4 {
     color: #FF69B4 !important;
+}
+
+/*
+
+
+    Grid Tab
+
+
+*/
+
+/* Address bar */
+#rootDiv > div > div.contentRoot-130 > div.barRoot-279.body-406 {
+    background-color: black !important;
+}
+
+/* Save button box */
+#rootDiv > div > div.contentRoot-130 > div.barRoot-279.body-406 > div > div > div {
+    background-color: black !important;
+}
+
+/* Save button */
+#rootDiv > div > div.contentRoot-130 > div.barRoot-279.body-406 > div:nth-child(1) > div > div > div > div > button {
+    background-color: black !important;
+}
+
+/* Line number gutter */
+#rootDiv > div > div.contentRoot-130 > div.editorRoot-283 > div > div > div > div.overflow-guard > div.margin > div.margin-view-overlays {
+    background-color: black !important;
+    color: white !important;
+}
+
+/* Main Editor */
+#rootDiv > div > div.contentRoot-130 > div.editorRoot-283 > div > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background > div.view-lines.monaco-mouse-cursor-text {
+    background-color: black !important;
+    color:white !important;
+}
+
+/* Formula line */
+#rootDiv > div > div.contentRoot-130 > div.editorRoot-283 > div > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background > div.view-lines.monaco-mouse-cursor-text > div {
+    border-left: solid 1px white !important;
+}
+
+/*
+
+
+    Modules Tab
+
+
+*/
+
+/* Module tabs menu bar */
+#rootDiv > div > div.contentRoot-130 > div.css-109 > div {
+    background-color: black !important;
+}
+
+/* Module tab text */
+.ms-Button {
+    color: #b9bed5 !important;
+}
+
+/* Module tab text */
+.ms-Button:hover {
+    background-color: rgb(37, 36, 35) !important;
+    color: #d1d5e8 !important;
+}
+
+/* Save/Import menu bar */
+#rootDiv > div > div.contentRoot-130 > div.css-108.body-406 > div > div {
+    background-color: black;
+}
+
+/* Save/Import menu buttons */
+#rootDiv > div > div.contentRoot-130 > div.css-108.body-406 > div > div > div > div > button {
+    background-color: black;
+}
+
+/* Main editor */
+#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.monaco-scrollable-element.editor-scrollable.vs > div.lines-content.monaco-editor-background {
+    background-color: black !important;
+}
+
+/* Line numbers gutter */
+#rootDiv > div > div.contentRoot-130 > div.css-163 > div > div > div > div.overflow-guard > div.margin > div.margin-view-overlays {
+    background-color: black !important;
+}
+
+/* ExcelApi footer bar */
+#rootDiv > div > div.css-353 {
+    background-color: black !important;
+    border-top: 1px solid white;
+}
+
+/* Selected line border */
+.monaco-editor .view-overlays .current-line {
+    border: 0px solid #eeeeee !important;
+}
+
+/* Indentation indicator lines */
+.monaco-editor .lines-content .core-guide-indent {
+    box-shadow: 1px 0 0 0 #555C77 inset !important;
 }
