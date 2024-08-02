@@ -41,7 +41,7 @@ Check out the following examples for prompt ideas and to learn how to structure 
     Enter "Circle" in cell **A1**. In another cell, enter:
 
     ```
-    =LABS.GENERATIVEAI("Q: Square. A: Cube. Q: " & A2 & ". A: ", 0.1)
+    =LABS.GENERATIVEAI("Q: Square. A: Cube. Q: " & A2 & ". A: " &A1, 0.1)
     ```
 
 1. Use the TEXTSPLIT formula with `LABS.GENERATIVEAI` to create a table of data that spills into multiple cells. Set `temperature` to 0.1 for limited creativity and set `max_tokens` to 1000 to extend the output length.
